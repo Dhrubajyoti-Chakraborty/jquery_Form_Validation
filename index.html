@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Javascript Form Validation </title>
+
+<!-- https://fahmidasclassroom.com/laravel-7-crud-using-bootstrap-modal/ -->
+<!-- https://www.devopsschool.com/blog/simple-ajax-crud-application-in-laravel/ -->
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <!-- Date picker ================= -->
+
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+  rel = "stylesheet">
+<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script>
+          $(function() {
+            $( "#datepicker-13" ).datepicker();
+            $( "#datepicker-13" ).datepicker("show");
+         });
+  </script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            
+            <form name="myForm" onsubmit="return validate()">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">First Name</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="Pls Enter first name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Last Name</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Pls Enter last name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Age</label>
+                    <input type="text" class="form-control" id="age" placeholder="Pls Enter age">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Address</label>
+                    <textarea type="text" class="form-control" id="address" rows="3" placeholder="Pls Enter address"></textarea>
+                </div>
+                <div class="form-group">
+                    <p>Enter Date: <input type = "text" id = "datepicker-13" required></p>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="validationTooltip05">Zip Code</label>
+                    <input type="text" class="form-control" id="zipcode" placeholder="Zip" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input name="password1" type="password" class="form-control" id="password1" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input name="password2" type="password" class="form-control" id="password2" placeholder="Confirm Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputmobile">Confirm mobile no</label>
+                    <input name="mobile" type="mobile" class="form-control" id="mobile" placeholder="mobile">
+                </div>
+                <div class="form-group">
+                <select name="country" id="country">
+                    <option>Select</option>
+                    <option>Australia</option>
+                    <option>India</option>
+                    <option>United States</option>
+                    <option>United Kingdom</option>
+                </select> 
+                </div>
+                <div class="form-group">
+                <label>Gender</label>
+                <div class="form-inline" >
+                    <label><input type="radio" name="gender" id="gender" value="male"> Male</label>
+                    <label><input type="radio" name="gender" id="gender" value="female"> Female</label> 
+                </div>
+                </div>
+                <div class="form-group" id="#hobbies">
+                    <label>Hobbies <i>(Optional)</i></label><br>
+                    <label></label><input type="checkbox" id="hobbies" name="hobbies[]" value="sports"> Sports</label>
+                    <label></label><input type="checkbox" id="hobbies" name="hobbies[]" value="movies"> Movies</label>
+                    <label></label><input type="checkbox" id="hobbies" name="hobbies[]" value="music"> Music</label>
+        
+                </div>
+                <div>
+                   <input type="file" name="f" id="img" onchange="validateImage()" >
+                </div>
+        
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label name="check" class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>  
+                <br>
+                <button type="submit" id="btnSubmit" class="btn btn-primary" >Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+
+
+    <script>
+        $(function () {
+            $('#btnSubmit').click(function () {
+                var firstname = $('#firstname').val()
+                var lastname = $('#lastname').val()
+                var age = $('#age').val()
+                var address = $('#address').val()
+                var zipcode = $('#zipcode').val()
+                var email = $('#email').val()
+                var password1 = $('#password1').val()
+                var password2 = $('#password2').val()
+                var mobile = $('#mobile').val()
+                var country = $('#country').val()
+                var gender = $('#gender').val()
+            //   alert(zipcode)
+                
+                if (firstname=="") {
+                        alert('Pls enter your first name')
+                    return false
+
+                }
+                if (lastname=="") {
+                        alert('Pls enter your last name')
+                    return false
+                }
+                if (age=="" || age<18 || age>=150) {
+                        alert('Pls enter your age')
+                    return false
+                }
+                if (address=="" || address<20) {
+                        alert('Pls enter your full address')
+                    return false
+                }
+                if(email.indexOf("@")<0 || email.lastIndexOf(".")<0 ){
+                    alert("Invalid Email")
+                    return false
+                }
+                if (password1<6) {
+                    alert('Pls enter atleast 6 digit')
+                    return false
+                }
+                if (password1!=password2) {
+                    alert('Password must be same')
+                    return false
+                }
+                if (mobile<=0 || mobile.length<10 ) {
+                    alert("Mobile no must be atleast 10 digit")
+                    return false
+                }
+                if (isNaN(mobile)) {
+                    alert('Pls enter numbers only')
+                    return false
+                }
+                if (country=="Select") {
+                    alert('Pls select country')
+                    return false
+                }
+                if (! $('#gender').prop('checked')) {
+                    alert('Pls choose your gender')
+                    return false
+                }
+                if (! $('#hobbies').prop('checked')) {
+                    alert('Pls choose your hobbies')
+                    return false
+                }
+                var a = /(^\d{6}$)/;  
+                if (zipcode=="" || a.test(zipcode) )    
+                {  
+                    alert("Your Entered Zip Code Is Not Valid.")
+                    return false
+                } 
+            })
+            
+        })
+    </script>
+    <!-- <script>
+        $(document).ready(   function()   {	 
+             $("#zipcode").keydown(function(event) {	
+                 // Allow backspace and delete	
+                 if ( event.keyCode == 46 || event.keyCode == 8 ) {	 
+
+                   	}	else {	   
+                           // Ensure that it is a number	 
+                    if (event.keyCode < 48 || event.keyCode > 57 ) {	
+                            event.preventDefault();		  
+                        }		
+                    }   
+            });
+        });
+    </script> -->
+
+
+    
+<script type="text/javascript">
+    $(function () {
+    $('#img').change(function () {
+    // alert('asd') 
+      var formData = new FormData();
+  
+      var file = $(this).files[0];
+  
+      formData.append("Filedata", file);
+      var t = file.type.split('/').pop().toLowerCase();
+      if (t != "jpeg" && t != "jpg" && t != "png" && t != "bmp" && t != "gif") {
+          alert('Please select a valid image file');
+          $('#img').value = '';
+          return false;
+      }
+      if (file.size > 1024000) {
+          alert('Max Upload size is 1MB only'); 
+          $('#img').value = '';
+          return false;
+      }
+      return true;
+      })
+
+
+     
+})
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title> Test for date picker</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.3/themes/south-street/ui.all.css" type="text/css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="./scripts/jquery.ui.datepicker.validation.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#validBeforeDatepicker, #validAfterDatepicker').datepicker();
+           
+            $('validateForm').validate({
+                rules:{
+                    startDate:{
+                        required: true,
+                        dpDate: true
+                    }
+                }
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+        <form id="validateForm" action="#" >
+            <p>
+                Select Date:
+                <input type="text"  id="validBeforeDatepicker" name="validTodayDatepicker"  > to
+                <input type="text"  id="validAfterDatepicker" name="validAfterDatePicker" >
+            </p>
+            <input type="submit" value="Submit">
+
+        </form>
+
+
+</body>
+</html> -->
+
+<!-- <style>
+    .valid {
+  background: green;
+  color: #fff;
+}
+.error {
+  background: red;
+  color: #fff;
+}
+</style>
+<form id="jQueryValidateTest">
+    <input type="date" required>
+</form>​
+
+
+<script>
+    $(function() {
+
+$( "#jQueryValidateTest" ).validate();
+
+$( "[type=date]" ).datepicker({
+  onClose: function() {
+    $( this ).valid();
+  }
+});
+});
+</script> -->
+
